@@ -15,6 +15,20 @@ require an explicit flag at startup and a confirmation token for destructive act
 
 ---
 
+## Installation
+
+```bash
+pip install mcp-server-aws
+```
+
+Or with uv:
+
+```bash
+uv pip install mcp-server-aws
+```
+
+---
+
 ## Quick start
 
 Install with uv:
@@ -281,6 +295,13 @@ Features worth adding:
 - **Config**: query AWS Config rules and compliance state
 - **Trusted Advisor**: read advisor findings
 - **Multi-account**: assume-role support for querying member accounts in an org
+
+---
+
+## Related Projects
+
+- [agents-platform](https://github.com/kernelpanic09/agents-platform) — an AI agent orchestration platform that can consume MCP servers like this one to give agents tool access to infrastructure without granting them broad shell permissions.
+- [terraform-aws-modules](https://github.com/kernelpanic09/terraform-aws-modules) — includes an `iam-roles` module that can provision the read-only IAM role this server needs, with permission boundaries and the right trust policy already wired in.
 
 ---
 

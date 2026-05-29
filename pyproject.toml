@@ -4,15 +4,17 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mcp-server-aws"
-version = "0.1.0"
+version = "1.0.0"
 description = "MCP server for AWS - lets AI clients query AWS resources over stdio"
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.10"
-authors = [{ name = "kernelpanic09" }]
-keywords = ["mcp", "aws", "claude", "ai", "cloud"]
+authors = [
+    { name = "kernelpanic09", email = "103852527+kernelpanic09@users.noreply.github.com" },
+]
+keywords = ["mcp", "aws", "claude", "ai"]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
@@ -20,6 +22,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Topic :: Software Development :: Libraries",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 dependencies = [
     "mcp>=1.0.0",
@@ -31,6 +34,7 @@ dependencies = [
 mcp-server-aws = "mcp_server_aws.__main__:main"
 
 [project.urls]
+Homepage = "https://github.com/kernelpanic09/mcp-server-aws"
 Repository = "https://github.com/kernelpanic09/mcp-server-aws"
 Issues = "https://github.com/kernelpanic09/mcp-server-aws/issues"
 
