@@ -1,0 +1,10 @@
+{
+  "_comment": "Add this mcpServers block to ~/Library/Application Support/Claude/claude_desktop_config.json (macOS) or %APPDATA%\\Claude\\claude_desktop_config.json (Windows).",
+  "mcpServers": {
+    "aws": {
+      "command": "mcp-server-aws",
+      "args": [],
+      "_comment_writes": "To enable write tools, add '--allow-writes' to args. Read the safety docs first."
+    }
+  }
+}

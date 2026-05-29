@@ -1,0 +1,14 @@
+{
+  "_comment": "Place in .claude/mcp.json in your project root, or merge into ~/.claude/mcp.json for global access.",
+  "mcpServers": {
+    "aws": {
+      "command": "mcp-server-aws",
+      "args": [],
+      "env": {
+        "_comment": "Override credentials or region here if you don't want to use the default boto3 chain.",
+        "AWS_PROFILE": "your-profile-name",
+        "AWS_DEFAULT_REGION": "us-east-1"
+      }
+    }
+  }
+}
