@@ -1,5 +1,11 @@
 # mcp-server-aws
 
+[![License: MIT](https://img.shields.io/github/license/kernelpanic09/mcp-server-aws)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/kernelpanic09/mcp-server-aws?include_prereleases&sort=semver)](https://github.com/kernelpanic09/mcp-server-aws/releases)
+[![Last commit](https://img.shields.io/github/last-commit/kernelpanic09/mcp-server-aws)](https://github.com/kernelpanic09/mcp-server-aws/commits)
+[![Python](https://img.shields.io/badge/python-3.10%2B-blue)](pyproject.toml)
+[![MCP](https://img.shields.io/badge/MCP-compatible-purple)](https://modelcontextprotocol.io)
+
 An MCP server that lets Claude and other AI clients query AWS resources over stdio.
 
 Connect it to Claude Desktop or Claude Code and you can ask questions like "which
