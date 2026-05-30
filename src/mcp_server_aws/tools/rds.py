@@ -37,10 +37,7 @@ def list_rds_instances(region: str | None = None) -> dict[str, Any]:
                         "created": db.get("InstanceCreateTime", "").isoformat()
                         if hasattr(db.get("InstanceCreateTime", ""), "isoformat")
                         else str(db.get("InstanceCreateTime", "")),
-                        "tags": {
-                            t["Key"]: t["Value"]
-                            for t in db.get("TagList", [])
-                        },
+                        "tags": {t["Key"]: t["Value"] for t in db.get("TagList", [])},
                     }
                 )
                 if len(instances) >= cfg.max_items:

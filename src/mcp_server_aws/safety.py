@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import time
 from typing import Any
 
 from .config import get_config
@@ -37,12 +36,8 @@ def make_confirmation_token(operation: str, params: dict[str, Any]) -> str:
     return f"confirm-{operation}-{digest}"
 
 
-def verify_confirmation_token(
-    operation: str, params: dict[str, Any], token: str
-) -> None:
+def verify_confirmation_token(operation: str, params: dict[str, Any], token: str) -> None:
     """Raise InvalidConfirmationTokenError if token doesn't match."""
     expected = make_confirmation_token(operation, params)
     if token != expected:
-        raise InvalidConfirmationTokenError(
-            f"Confirmation token mismatch. Expected: {expected}"
-        )
+        raise InvalidConfirmationTokenError(f"Confirmation token mismatch. Expected: {expected}")

@@ -1,7 +1,5 @@
 """Tests for EC2 tools."""
 
-import pytest
-
 from mcp_server_aws.config import Config, set_config
 from mcp_server_aws.tools.ec2 import (
     describe_ec2_instance,

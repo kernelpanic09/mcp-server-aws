@@ -25,7 +25,7 @@ def query_cloudwatch_logs(
 
     Results are capped at config.max_log_lines.
     """
-    from datetime import datetime, timezone
+    from datetime import datetime
 
     client = get_client("logs", region)
     cfg = get_config()
@@ -70,10 +70,7 @@ def query_cloudwatch_logs(
     rows = rows[: cfg.max_log_lines]
 
     # Convert from [{field, value}] format to dicts.
-    records = [
-        {field["field"]: field["value"] for field in row}
-        for row in rows
-    ]
+    records = [{field["field"]: field["value"] for field in row} for row in rows]
 
     return {
         "log_group": log_group,

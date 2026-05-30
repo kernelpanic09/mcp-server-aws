@@ -35,12 +35,22 @@ def list_cloudformation_stacks(region: str | None = None) -> dict[str, Any]:
         paginator = client.get_paginator("list_stacks")
         # Exclude deleted stacks by default.
         active_statuses = [
-            "CREATE_COMPLETE", "CREATE_FAILED", "CREATE_IN_PROGRESS",
-            "ROLLBACK_COMPLETE", "ROLLBACK_FAILED", "ROLLBACK_IN_PROGRESS",
-            "UPDATE_COMPLETE", "UPDATE_IN_PROGRESS", "UPDATE_ROLLBACK_COMPLETE",
-            "UPDATE_ROLLBACK_FAILED", "UPDATE_ROLLBACK_IN_PROGRESS",
-            "REVIEW_IN_PROGRESS", "IMPORT_COMPLETE", "IMPORT_IN_PROGRESS",
-            "IMPORT_ROLLBACK_COMPLETE", "IMPORT_ROLLBACK_FAILED",
+            "CREATE_COMPLETE",
+            "CREATE_FAILED",
+            "CREATE_IN_PROGRESS",
+            "ROLLBACK_COMPLETE",
+            "ROLLBACK_FAILED",
+            "ROLLBACK_IN_PROGRESS",
+            "UPDATE_COMPLETE",
+            "UPDATE_IN_PROGRESS",
+            "UPDATE_ROLLBACK_COMPLETE",
+            "UPDATE_ROLLBACK_FAILED",
+            "UPDATE_ROLLBACK_IN_PROGRESS",
+            "REVIEW_IN_PROGRESS",
+            "IMPORT_COMPLETE",
+            "IMPORT_IN_PROGRESS",
+            "IMPORT_ROLLBACK_COMPLETE",
+            "IMPORT_ROLLBACK_FAILED",
             "IMPORT_ROLLBACK_IN_PROGRESS",
         ]
         for page in paginator.paginate(StackStatusFilter=active_statuses):

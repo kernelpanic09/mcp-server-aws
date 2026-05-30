@@ -4,13 +4,12 @@ from __future__ import annotations
 
 import json
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 from mcp.server.fastmcp import FastMCP
 
 from .auth import get_client
-from .config import get_config
 from .safety import (
     InvalidConfirmationTokenError,
     WritesNotEnabledError,
@@ -39,9 +38,10 @@ mcp = FastMCP("mcp-server-aws")
 # Logging helper - structured JSON to stderr so it doesn't pollute stdio MCP.
 # ---------------------------------------------------------------------------
 
+
 def _log(tool: str, params: dict[str, Any], result_summary: str) -> None:
     entry = {
-        "ts": datetime.now(timezone.utc).isoformat(),
+        "ts": datetime.now(UTC).isoformat(),
         "tool": tool,
         "params": params,
         "result": result_summary,
@@ -52,6 +52,7 @@ def _log(tool: str, params: dict[str, Any], result_summary: str) -> None:
 # ---------------------------------------------------------------------------
 # EC2
 # ---------------------------------------------------------------------------
+
 
 @mcp.tool()
 def list_ec2_instances(
@@ -70,7 +71,7 @@ def list_ec2_instances(
 def describe_ec2_instance(instance_id: str, region: str = "") -> dict[str, Any]:
     """Return full details for a single EC2 instance."""
     result = ec2.describe_ec2_instance(instance_id, region=region or None)
-    _log("describe_ec2_instance", {"instance_id": instance_id}, "ok" if "error" not in result else result["error"])
+    _log("describe_ec2_instance", {"instance_id": instance_id}, result.get("error", "ok"))
     return result
 
 
@@ -88,13 +89,14 @@ def stop_ec2_instance(
 ) -> dict[str, Any]:
     """Stop a running EC2 instance. Requires --allow-writes and a valid confirmation_token from get_stop_confirmation_token."""
     result = ec2.stop_ec2_instance(instance_id, confirmation_token, region=region or None)
-    _log("stop_ec2_instance", {"instance_id": instance_id}, "ok" if "error" not in result else result["error"])
+    _log("stop_ec2_instance", {"instance_id": instance_id}, result.get("error", "ok"))
     return result
 
 
 # ---------------------------------------------------------------------------
 # S3
 # ---------------------------------------------------------------------------
+
 
 @mcp.tool()
 def list_s3_buckets() -> dict[str, Any]:
@@ -108,13 +110,14 @@ def list_s3_buckets() -> dict[str, Any]:
 def get_s3_bucket_policy(bucket_name: str) -> dict[str, Any]:
     """Return the resource-based policy for an S3 bucket."""
     result = s3.get_s3_bucket_policy(bucket_name)
-    _log("get_s3_bucket_policy", {"bucket": bucket_name}, "ok" if "error" not in result else result["error"])
+    _log("get_s3_bucket_policy", {"bucket": bucket_name}, result.get("error", "ok"))
     return result
 
 
 # ---------------------------------------------------------------------------
 # IAM
 # ---------------------------------------------------------------------------
+
 
 @mcp.tool()
 def list_iam_users() -> dict[str, Any]:
@@ -136,13 +139,14 @@ def list_iam_roles() -> dict[str, Any]:
 def get_iam_role(role_name: str) -> dict[str, Any]:
     """Return full details for an IAM role including attached policies and trust policy."""
     result = iam.get_iam_role(role_name)
-    _log("get_iam_role", {"role_name": role_name}, "ok" if "error" not in result else result["error"])
+    _log("get_iam_role", {"role_name": role_name}, result.get("error", "ok"))
     return result
 
 
 # ---------------------------------------------------------------------------
 # CloudWatch
 # ---------------------------------------------------------------------------
+
 
 @mcp.tool()
 def get_cloudwatch_metric(
@@ -170,13 +174,18 @@ def get_cloudwatch_metric(
         end_time=end_time,
         region=region or None,
     )
-    _log("get_cloudwatch_metric", {"namespace": namespace, "metric": metric_name}, "ok" if "error" not in result else result["error"])
+    _log(
+        "get_cloudwatch_metric",
+        {"namespace": namespace, "metric": metric_name},
+        result.get("error", "ok"),
+    )
     return result
 
 
 # ---------------------------------------------------------------------------
 # CloudWatch Logs
 # ---------------------------------------------------------------------------
+
 
 @mcp.tool()
 def query_cloudwatch_logs(
@@ -194,13 +203,18 @@ def query_cloudwatch_logs(
         end_time=end_time,
         region=region or None,
     )
-    _log("query_cloudwatch_logs", {"log_group": log_group}, f"{len(result.get('records', []))} records" if "error" not in result else result["error"])
+    _log(
+        "query_cloudwatch_logs",
+        {"log_group": log_group},
+        f"{len(result.get('records', []))} records" if "error" not in result else result["error"],
+    )
     return result
 
 
 # ---------------------------------------------------------------------------
 # EKS
 # ---------------------------------------------------------------------------
+
 
 @mcp.tool()
 def list_eks_clusters(region: str = "") -> dict[str, Any]:
@@ -214,7 +228,7 @@ def list_eks_clusters(region: str = "") -> dict[str, Any]:
 def describe_eks_cluster(name: str, region: str = "") -> dict[str, Any]:
     """Return full details for an EKS cluster."""
     result = eks.describe_eks_cluster(name, region=region or None)
-    _log("describe_eks_cluster", {"name": name}, "ok" if "error" not in result else result["error"])
+    _log("describe_eks_cluster", {"name": name}, result.get("error", "ok"))
     return result
 
 
@@ -222,17 +236,21 @@ def describe_eks_cluster(name: str, region: str = "") -> dict[str, Any]:
 # Lambda
 # ---------------------------------------------------------------------------
 
+
 @mcp.tool()
 def list_lambda_functions(region: str = "") -> dict[str, Any]:
     """List all Lambda functions with runtime and memory details."""
     result = lambda_.list_lambda_functions(region=region or None)
-    _log("list_lambda_functions", {"region": region}, f"{len(result.get('functions', []))} functions")
+    _log(
+        "list_lambda_functions", {"region": region}, f"{len(result.get('functions', []))} functions"
+    )
     return result
 
 
 # ---------------------------------------------------------------------------
 # Cost Explorer
 # ---------------------------------------------------------------------------
+
 
 @mcp.tool()
 def get_cost_and_usage(
@@ -251,7 +269,7 @@ def get_cost_and_usage(
         granularity=granularity,
         group_by=gb,
     )
-    _log("get_cost_and_usage", {"start": start_date, "end": end_date}, "ok" if "error" not in result else result["error"])
+    _log("get_cost_and_usage", {"start": start_date, "end": end_date}, result.get("error", "ok"))
     return result
 
 
@@ -259,11 +277,14 @@ def get_cost_and_usage(
 # CloudFormation
 # ---------------------------------------------------------------------------
 
+
 @mcp.tool()
 def list_cloudformation_stacks(region: str = "") -> dict[str, Any]:
     """List all active CloudFormation stacks in a region."""
     result = cloudformation.list_cloudformation_stacks(region=region or None)
-    _log("list_cloudformation_stacks", {"region": region}, f"{len(result.get('stacks', []))} stacks")
+    _log(
+        "list_cloudformation_stacks", {"region": region}, f"{len(result.get('stacks', []))} stacks"
+    )
     return result
 
 
@@ -271,13 +292,14 @@ def list_cloudformation_stacks(region: str = "") -> dict[str, Any]:
 def describe_cloudformation_stack(name: str, region: str = "") -> dict[str, Any]:
     """Return full details for a CloudFormation stack including outputs and parameters."""
     result = cloudformation.describe_cloudformation_stack(name, region=region or None)
-    _log("describe_cloudformation_stack", {"name": name}, "ok" if "error" not in result else result["error"])
+    _log("describe_cloudformation_stack", {"name": name}, result.get("error", "ok"))
     return result
 
 
 # ---------------------------------------------------------------------------
 # RDS
 # ---------------------------------------------------------------------------
+
 
 @mcp.tool()
 def list_rds_instances(region: str = "") -> dict[str, Any]:
@@ -291,17 +313,19 @@ def list_rds_instances(region: str = "") -> dict[str, Any]:
 # Security Groups
 # ---------------------------------------------------------------------------
 
+
 @mcp.tool()
 def describe_security_group(group_id: str, region: str = "") -> dict[str, Any]:
     """Return inbound and outbound rules for a VPC security group."""
     result = security_groups.describe_security_group(group_id, region=region or None)
-    _log("describe_security_group", {"group_id": group_id}, "ok" if "error" not in result else result["error"])
+    _log("describe_security_group", {"group_id": group_id}, result.get("error", "ok"))
     return result
 
 
 # ---------------------------------------------------------------------------
 # Write tools: tagging and ECS service restart
 # ---------------------------------------------------------------------------
+
 
 @mcp.tool()
 def tag_resource(arn: str, tags: str) -> dict[str, Any]:
@@ -315,7 +339,7 @@ def tag_resource(arn: str, tags: str) -> dict[str, Any]:
         return {"error": "WritesNotEnabled", "message": str(e)}
 
     parsed_tags = json.loads(tags)
-    tag_list = [{"Key": k, "Value": v} for k, v in parsed_tags.items()]
+    [{"Key": k, "Value": v} for k, v in parsed_tags.items()]
 
     # Tag via the Resource Groups Tagging API which works across most services.
     client = get_client("resourcegroupstaggingapi")
@@ -382,6 +406,7 @@ def get_ecs_restart_confirmation_token(cluster: str, service: str) -> dict[str, 
 # Resources
 # ---------------------------------------------------------------------------
 
+
 @mcp.resource("aws://account/identity")
 def account_identity() -> str:
     """Current account ID and caller identity."""
@@ -405,7 +430,7 @@ def aws_regions() -> str:
     try:
         resp = client.describe_regions(AllRegions=False)
         regions = sorted(r["RegionName"] for r in resp.get("Regions", []))
-    except Exception as e:
+    except Exception:
         regions = []
     return json.dumps({"regions": regions}, indent=2)
 

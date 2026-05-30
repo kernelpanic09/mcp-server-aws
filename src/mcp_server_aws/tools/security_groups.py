@@ -32,9 +32,7 @@ def describe_security_group(group_id: str, region: str | None = None) -> dict[st
                 "to_port": r.get("ToPort"),
                 "cidr_ipv4": [ip["CidrIp"] for ip in r.get("IpRanges", [])],
                 "cidr_ipv6": [ip["CidrIpv6"] for ip in r.get("Ipv6Ranges", [])],
-                "referenced_groups": [
-                    g["GroupId"] for g in r.get("UserIdGroupPairs", [])
-                ],
+                "referenced_groups": [g["GroupId"] for g in r.get("UserIdGroupPairs", [])],
                 "description": (r.get("IpRanges") or [{}])[0].get("Description", "")
                 if r.get("IpRanges")
                 else "",

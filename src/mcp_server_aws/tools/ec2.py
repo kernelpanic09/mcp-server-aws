@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 from typing import Any
 
 from botocore.exceptions import ClientError
@@ -87,8 +86,7 @@ def describe_ec2_instance(
 
     # Add security groups and block devices for the full-detail view.
     data["security_groups"] = [
-        {"id": sg["GroupId"], "name": sg["GroupName"]}
-        for sg in inst.get("SecurityGroups", [])
+        {"id": sg["GroupId"], "name": sg["GroupName"]} for sg in inst.get("SecurityGroups", [])
     ]
     data["block_devices"] = [
         {

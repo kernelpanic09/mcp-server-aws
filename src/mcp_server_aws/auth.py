@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 import boto3
-from botocore.session import Session as BotocoreSession
 
 from .config import get_config
 
@@ -23,5 +24,6 @@ def get_session(region: str | None = None, profile: str | None = None) -> boto3.
     )
 
 
-def get_client(service: str, region: str | None = None) -> "boto3.client":
-    return get_session(region=region).client(service)
+def get_client(service: str, region: str | None = None) -> Any:
+    session: Any = get_session(region=region)
+    return session.client(service)

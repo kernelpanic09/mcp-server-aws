@@ -2,8 +2,6 @@
 
 import json
 
-import pytest
-
 from mcp_server_aws.tools.s3 import get_s3_bucket_policy, list_s3_buckets
 
 
