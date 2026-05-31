@@ -1,5 +1,6 @@
 # mcp-server-aws
 
+[![CI](https://github.com/kernelpanic09/mcp-server-aws/actions/workflows/ci.yml/badge.svg)](https://github.com/kernelpanic09/mcp-server-aws/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/github/license/kernelpanic09/mcp-server-aws)](LICENSE)
 [![Release](https://img.shields.io/github/v/release/kernelpanic09/mcp-server-aws?include_prereleases&sort=semver)](https://github.com/kernelpanic09/mcp-server-aws/releases)
 [![Last commit](https://img.shields.io/github/last-commit/kernelpanic09/mcp-server-aws)](https://github.com/kernelpanic09/mcp-server-aws/commits)
