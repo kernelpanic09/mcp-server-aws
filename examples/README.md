@@ -10,4 +10,4 @@ Drop-in configs and prompt ideas for wiring this MCP server into an AI client.
 
 Both configs assume `mcp-server-aws` is on your `PATH` (installed via `pip`/`uv`,
 see the [main README](../README.md#installation)). To enable write tools, add
-`--allow-writes` to `args` — read [Safety](../README.md#safety) first.
+`--allow-writes` to `args` - read [Safety](../README.md#safety) first.

@@ -301,8 +301,8 @@ Features worth adding:
 
 ## Related Projects
 
-- [agents-platform](https://github.com/kernelpanic09/agents-platform) — an AI agent orchestration platform that can consume MCP servers like this one to give agents tool access to infrastructure without granting them broad shell permissions.
-- [terraform-aws-modules](https://github.com/kernelpanic09/terraform-aws-modules) — includes an `iam-roles` module that can provision the read-only IAM role this server needs, with permission boundaries and the right trust policy already wired in.
+- [agents-platform](https://github.com/kernelpanic09/agents-platform) - an AI agent orchestration platform that can consume MCP servers like this one to give agents tool access to infrastructure without granting them broad shell permissions.
+- [terraform-aws-modules](https://github.com/kernelpanic09/terraform-aws-modules) - includes an `iam-roles` module that can provision the read-only IAM role this server needs, with permission boundaries and the right trust policy already wired in.
 
 ---
 
