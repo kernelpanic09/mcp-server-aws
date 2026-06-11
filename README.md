@@ -303,6 +303,8 @@ Features worth adding:
 
 - [agents-platform](https://github.com/kernelpanic09/agents-platform) - an AI agent orchestration platform that can consume MCP servers like this one to give agents tool access to infrastructure without granting them broad shell permissions.
 - [terraform-aws-modules](https://github.com/kernelpanic09/terraform-aws-modules) - includes an `iam-roles` module that can provision the read-only IAM role this server needs, with permission boundaries and the right trust policy already wired in.
+- [k8s-ai-operator](https://github.com/kernelpanic09/k8s-ai-operator) - exposes Bedrock models as cluster resources; complements this server's read-only AWS access for in-cluster agent workflows.
+- [bedrock-cli](https://github.com/kernelpanic09/bedrock-cli) - a terminal client for Bedrock Knowledge Bases, Agents, and Guardrails when you want a CLI instead of an MCP transport.
 
 ---
 
