@@ -133,4 +133,4 @@ lets boto3 resolve credentials in this order:
 
 The `--profile` flag or `AWS_PROFILE` env var selects which profile to use.
 Running the server on an EC2 instance with an attached IAM role is the cleanest
-setup for a always-on deployment.
+setup for an always-on deployment.
