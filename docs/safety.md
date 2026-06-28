@@ -26,7 +26,7 @@ These tools require a two-step process:
 1. Call the corresponding `get_*_confirmation_token` tool to get a token.
 2. Pass that token as `confirmation_token` in the destructive call.
 
-Tokens are HMAC-style digests derived from the operation name and parameters.
+Tokens are SHA-256 digests derived from the operation name and parameters.
 A token for `stop i-abc` cannot be reused for `stop i-xyz`.
 
 ```python
