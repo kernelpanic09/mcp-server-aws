@@ -45,12 +45,19 @@ def parse_args(argv: list[str] | None = None) -> Config:
         default=100,
         help="Max items returned per paginated list call",
     )
+    parser.add_argument(
+        "--max-log-lines",
+        type=int,
+        default=100,
+        help="Max log records returned by CloudWatch Logs Insights queries",
+    )
     args = parser.parse_args(argv)
     return Config(
         allow_writes=args.allow_writes,
         region=args.region,
         profile=args.profile,
         max_items=args.max_items,
+        max_log_lines=args.max_log_lines,
     )
 
 
