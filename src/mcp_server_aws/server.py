@@ -339,7 +339,6 @@ def tag_resource(arn: str, tags: str) -> dict[str, Any]:
         return {"error": "WritesNotEnabled", "message": str(e)}
 
     parsed_tags = json.loads(tags)
-    [{"Key": k, "Value": v} for k, v in parsed_tags.items()]
 
     # Tag via the Resource Groups Tagging API which works across most services.
     client = get_client("resourcegroupstaggingapi")
