@@ -10,17 +10,17 @@ from ..auth import get_client
 from ..config import get_config
 
 
+def _iso(dt: Any) -> str:
+    return dt.isoformat() if hasattr(dt, "isoformat") else str(dt)
+
+
 def _summarize_stack(s: dict[str, Any]) -> dict[str, Any]:
     return {
         "stack_name": s.get("StackName"),
         "stack_id": s.get("StackId"),
         "status": s.get("StackStatus"),
-        "created": s.get("CreationTime", "").isoformat()
-        if hasattr(s.get("CreationTime", ""), "isoformat")
-        else str(s.get("CreationTime", "")),
-        "updated": s.get("LastUpdatedTime", "").isoformat()
-        if hasattr(s.get("LastUpdatedTime", ""), "isoformat")
-        else str(s.get("LastUpdatedTime", "")),
+        "created": _iso(s.get("CreationTime", "")),
+        "updated": _iso(s.get("LastUpdatedTime", "")),
         "description": s.get("Description", ""),
         "tags": {t["Key"]: t["Value"] for t in s.get("Tags", [])},
     }
