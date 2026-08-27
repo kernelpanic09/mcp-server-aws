@@ -10,6 +10,10 @@ from ..auth import get_client
 from ..config import get_config
 
 
+def _iso(dt: Any) -> str:
+    return dt.isoformat() if hasattr(dt, "isoformat") else str(dt)
+
+
 def list_rds_instances(region: str | None = None) -> dict[str, Any]:
     """List RDS DB instances with engine, status, and size info."""
     client = get_client("rds", region)
@@ -34,9 +38,7 @@ def list_rds_instances(region: str | None = None) -> dict[str, Any]:
                         "port": db.get("Endpoint", {}).get("Port"),
                         "db_name": db.get("DBName"),
                         "vpc_id": db.get("DBSubnetGroup", {}).get("VpcId"),
-                        "created": db.get("InstanceCreateTime", "").isoformat()
-                        if hasattr(db.get("InstanceCreateTime", ""), "isoformat")
-                        else str(db.get("InstanceCreateTime", "")),
+                        "created": _iso(db.get("InstanceCreateTime", "")),
                         "tags": {t["Key"]: t["Value"] for t in db.get("TagList", [])},
                     }
                 )
