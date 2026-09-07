@@ -86,7 +86,7 @@ Create or merge into `.claude/mcp.json` in your project:
 ### Options
 
 ```
-mcp-server-aws [--allow-writes] [--region REGION] [--profile PROFILE] [--max-items N]
+mcp-server-aws [--allow-writes] [--region REGION] [--profile PROFILE] [--max-items N] [--max-log-lines N]
 ```
 
 | Flag | Default | Notes |
@@ -95,6 +95,7 @@ mcp-server-aws [--allow-writes] [--region REGION] [--profile PROFILE] [--max-ite
 | `--region` | `us-east-1` | Default region for calls that don't specify one |
 | `--profile` | boto3 default | AWS credential profile |
 | `--max-items` | 100 | Max items per paginated list |
+| `--max-log-lines` | 100 | Max records returned by CloudWatch Logs Insights queries |
 
 ---
 
