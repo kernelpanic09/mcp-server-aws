@@ -92,8 +92,8 @@ mcp-server-aws [--allow-writes] [--region REGION] [--profile PROFILE] [--max-ite
 | Flag | Default | Notes |
 |------|---------|-------|
 | `--allow-writes` | off | Enables tag, stop, and restart tools |
-| `--region` | `us-east-1` | Default region for calls that don't specify one |
-| `--profile` | boto3 default | AWS credential profile |
+| `--region` | `us-east-1` | Default region for calls that don't specify one; falls back to `AWS_DEFAULT_REGION` env var |
+| `--profile` | boto3 default | AWS credential profile; falls back to `AWS_PROFILE` env var |
 | `--max-items` | 100 | Max items per paginated list |
 | `--max-log-lines` | 100 | Max records returned by CloudWatch Logs Insights queries |
 
