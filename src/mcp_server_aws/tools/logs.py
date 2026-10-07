@@ -3,12 +3,27 @@
 from __future__ import annotations
 
 import time
+from datetime import datetime
 from typing import Any
 
 from botocore.exceptions import ClientError
 
 from ..auth import get_client
 from ..config import get_config
+
+
+def _parse_time(t: str) -> int:
+    """Parse a start/end time argument into a Unix timestamp (seconds).
+
+    Accepts Unix timestamps (as strings) or ISO 8601 strings, including the
+    trailing 'Z' shorthand for UTC that datetime.fromisoformat doesn't accept
+    on its own.
+    """
+    try:
+        return int(t)
+    except ValueError:
+        dt = datetime.fromisoformat(t.replace("Z", "+00:00"))
+        return int(dt.timestamp())
 
 
 def query_cloudwatch_logs(
@@ -25,18 +40,8 @@ def query_cloudwatch_logs(
 
     Results are capped at config.max_log_lines.
     """
-    from datetime import datetime
-
     client = get_client("logs", region)
     cfg = get_config()
-
-    def _parse_time(t: str) -> int:
-        # Accept Unix timestamps or ISO strings.
-        try:
-            return int(t)
-        except ValueError:
-            dt = datetime.fromisoformat(t.replace("Z", "+00:00"))
-            return int(dt.timestamp())
 
     try:
         start = client.start_query(
