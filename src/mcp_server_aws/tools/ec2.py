@@ -109,7 +109,7 @@ def stop_ec2_instance(
     """Stop a running EC2 instance.
 
     Requires --allow-writes and a valid confirmation_token.
-    Call make_stop_confirmation() first to get the token.
+    Call get_stop_confirmation_token() first to get the token.
     """
     try:
         require_writes()
